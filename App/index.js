@@ -1,10 +1,26 @@
 // Filename: index.js
 // Combined code from all files
-import React from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, TextInput, TouchableOpacity } from 'react-native';
+
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+function Login({ navigation }) {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = () => {
+        if (password === 'password123') {
+            navigation.navigate('Home');
+        } else {
+            Alert.alert('Error', 'Incorrect password');
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
@@ -16,13 +32,24 @@ export default function App() {
                 </LinearGradient>
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Username</Text>
-                    <TextInput style={styles.input} placeholder="Enter username" />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter username"
+                        value={username}
+                        onChangeText={setUsername}
+                    />
                 </View>
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Password</Text>
-                    <TextInput style={styles.input} placeholder="Enter password" secureTextEntry={true} />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter password"
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={setPassword}
+                    />
                 </View>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <Text style={styles.dividerText}>or</Text>
@@ -31,6 +58,25 @@ export default function App() {
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
+    );
+}
+
+function Home() {
+    return (
+        <SafeAreaView style={styles.homeContainer}>
+            <Text style={styles.homeText}>Home Screen</Text>
+        </SafeAreaView>
+    );
+}
+
+export default function App() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 }
 
@@ -87,5 +133,14 @@ const styles = StyleSheet.create({
     dividerText: {
         marginVertical: 20,
         fontSize: 16,
+    },
+    homeContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    homeText: {
+        fontSize: 24,
+        fontWeight: 'bold',
     },
 });
