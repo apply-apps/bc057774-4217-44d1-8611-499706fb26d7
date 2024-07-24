@@ -1,9 +1,8 @@
 // Filename: index.js
 // Combined code from all files
-
 import React from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, TextInput, TouchableOpacity } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function App() {
     return (
