@@ -2,9 +2,9 @@
 // Combined code from all files
 
 import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const Stack = createStackNavigator();
@@ -48,6 +48,7 @@ function Login({ navigation }) {
                         value={password}
                         onChangeText={setPassword}
                     />
+                    <Text style={styles.warningText}>Password must be 'password123'</Text>
                 </View>
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Login</Text>
@@ -116,6 +117,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         paddingLeft: 10,
+    },
+    warningText: {
+        color: 'red',
+        marginTop: 5,
+        fontSize: 12,
     },
     button: {
         width: '80%',
